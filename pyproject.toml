@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "django-graduate-work"
+version = "0.1.0"
+description = ""
+authors = ["ALittleMoron <dima.lunev14@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^3.2.6"
+django-debug-toolbar = "^3.2.2"
+psycopg2-binary = "^2.9.1"
+Pillow = "^8.3.1"
+python-slugify = "^5.0.2"
+django-taggit = "^1.5.1"
+django-ckeditor = "^6.1.0"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.910"
+black = "^21.7b0"
+ipython = "^7.26.0"
+types-python-slugify = "^5.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
