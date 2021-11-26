@@ -17,6 +17,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+sys.path.insert(0, os.path.join(BASE_DIR, 'applications'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'debug_toolbar',
     'taggit',
+
+    'bibliofund',
 ]
 
 MIDDLEWARE = [
