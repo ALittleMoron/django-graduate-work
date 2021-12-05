@@ -14,11 +14,8 @@ def presave_fields(sender, instance, *args, **kwargs):
     elif not instance.is_published and instance.published_at is not None:
         instance.published_at = None
     
-    if not instance.file_format and instance.file:
-        instance.file_format = instance.file.name.split('.')[-1]
-        instance.old_file_format = instance.file_format
-    elif instance.file_format != instance.old_file_format:
-        instance.file_format = instance.file.name.split('.')[-1]
+    instance.file_format = instance.file.name.split('.')[-1]
+
 
 
 @receiver(pre_save, sender=Category)

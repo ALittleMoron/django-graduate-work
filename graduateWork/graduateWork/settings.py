@@ -42,9 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'debug_toolbar',
-    'taggit',
 
     'bibliofund',
+
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [

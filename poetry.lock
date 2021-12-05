@@ -108,6 +108,14 @@ python-versions = "*"
 django-js-asset = ">=1.2.2"
 
 [[package]]
+name = "django-cleanup"
+version = "5.2.0"
+description = "Deletes old files."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django-debug-toolbar"
 version = "3.2.2"
 description = "A configurable set of panels that display various debug information about the current request/response."
@@ -415,7 +423,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "52d0fdcb5be5bc31fc5b9dff1b6238ce93d693febbdfed696a00b8008c108b55"
+content-hash = "aff3f11714450330b68dc73ba0abd47d4df8e1a3dc57a952bda059b7baeb3f57"
 
 [metadata.files]
 appnope = [
@@ -453,6 +461,10 @@ django = [
 django-ckeditor = [
     {file = "django-ckeditor-6.2.0.tar.gz", hash = "sha256:df64dc9e62790ef824f609605d31be847bdbce1cc7aa94e49bd5ca60d7aa79bb"},
     {file = "django_ckeditor-6.2.0-py2.py3-none-any.whl", hash = "sha256:9f66420907e41f5b4e698fa5671a00a86995776735f2c4696174aed4640fcbd8"},
+]
+django-cleanup = [
+    {file = "django-cleanup-5.2.0.tar.gz", hash = "sha256:909d10ff574f5ce1a40fa63bd5c94c9ed866fd7ae770994c46cdf66c3db3e846"},
+    {file = "django_cleanup-5.2.0-py2.py3-none-any.whl", hash = "sha256:193cf69de54b9fc0a0f4547edbb3a63bbe01728cb029f9f4b7912098cc1bced7"},
 ]
 django-debug-toolbar = [
     {file = "django-debug-toolbar-3.2.2.tar.gz", hash = "sha256:8c5b13795d4040008ee69ba82dcdd259c49db346cf7d0de6e561a49d191f0860"},

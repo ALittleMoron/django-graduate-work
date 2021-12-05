@@ -42,12 +42,6 @@ class Document(models.Model):
         max_length=10,
         verbose_name="Формат файла"
     )
-    old_file_format = models.CharField( # Нужен для корректного изменения формата.
-        null=True,                      # Нигде не используется
-        blank=True,
-        max_length=10,
-        verbose_name="Старый формат файла"
-    ) 
     publisher = models.ForeignKey(
         get_user_model(),
         verbose_name="Автор",
