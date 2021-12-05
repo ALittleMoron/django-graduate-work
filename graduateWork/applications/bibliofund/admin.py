@@ -1,8 +1,4 @@
-from ckeditor.widgets import CKEditorWidget
-from django import forms
 from django.contrib import admin
-from django.utils.html import format_html
-from django.templatetags.static import static
 
 from .models import Document, Category
 
@@ -12,12 +8,14 @@ class DocumentAdmin(admin.ModelAdmin):
         "id",
         "title",
         "document_type",
-        "category"
+        "category",
+        "published_at"
     )
-    # list_display_links = ()
-    # search_fields = ()
-    # list_filter = ()
+    search_fields = ('title', 'abstract_en', 'abstract_ru')
+    list_display_links = ('id', 'title',)
+    list_filter = ('document_type', 'is_published', 'published_at')
     prepopulated_fields = {"slug": ("title",)}
+    readonly_fields = ('published_at', 'file_format',)
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -26,6 +24,9 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
         'category_type'
     )
+    search_fields = ('name', 'category_type')
+    list_display_links = ('id', 'name',)
+    list_filter = ('category_type',)
     prepopulated_fields = {"slug": ("name",)}
 
 
