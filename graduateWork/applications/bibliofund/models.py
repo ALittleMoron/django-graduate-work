@@ -2,11 +2,7 @@ import os
 
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 from django.urls import reverse
-from django.utils import timezone
-from slugify import slugify
 
 
 def custom_upload_to(instance, filename):
@@ -56,6 +52,12 @@ class Document(models.Model):
         max_length=10,
         verbose_name="Формат файла"
     )
+    old_file_format = models.CharField( # Нужен для корректного изменения формата.
+        null=True,                      # Нигде не используется
+        blank=True,
+        max_length=10,
+        verbose_name="Старый формат файла"
+    ) 
     publisher = models.ForeignKey(
         get_user_model(),
         verbose_name="Автор",
@@ -126,30 +128,3 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = "Категории"
-
-
-@receiver(pre_save, sender=Document)
-def presave_fields(sender, instance, *args, **kwargs):
-    """ Обычный сигнал для изменения времени публикации и добавление формата документа. """
-    if instance.is_published and instance.published_at is None:
-        instance.published_at = timezone.now()
-    elif not instance.is_published and instance.published_at is not None:
-        instance.published_at = None
-    
-    if not instance.file_format and instance.file:
-        instance.file_format = instance.file.name.split('.')[-1]
-        instance.old_format = instance.file_format
-    if instance.file_format != instance.old_format:
-        instance.file_format = instance.file.name.split('.')[-1]
-    
-    instance.slug = slugify(instance.name)
-
-
-@receiver(pre_save, sender=Category)
-@receiver(pre_save, sender=Document)
-def presave_slug(sender, instance, *args, **kwargs):
-    """ Обычный сигнал для добавления слага перед сохранением.
-
-    Не использую стандартный встроенный в django slugify, потому что он не работает с кириллицей.
-    """
-    instance.slug = slugify(instance.name)
