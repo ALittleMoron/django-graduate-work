@@ -118,6 +118,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Auth const
+
+LOGIN_URL = "/login"
+
+LOGIN_REDIRECT_URL = 'graduateWork/homePage'
+
+LOGOUT_REDIRECT_URL = 'graduateWork/homePage'
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
