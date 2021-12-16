@@ -46,3 +46,17 @@ cd django-graduate-work
 poetry install
 poetry shell
 ```
+
+Непосредственный запуск проекта:
+
+```bash
+cd путь-до-корневой-папки-репозитория/graduateWork
+
+# замена настроек БД и ключа django под себя.
+
+python3 manage.py collectstatic    # \
+python3 manage.py makemigrations   #  Или все одной командой через &&
+python3 manage.py migrate          # /
+
+python3 manage.py runserver 8000   # либо полноценно через gunicorn, nginx и т.д.
+```
