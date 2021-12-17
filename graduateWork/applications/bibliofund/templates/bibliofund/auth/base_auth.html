@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="{% static "bootstrap/css/bootstrap.min.css" %}"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="{% static "other/grForm.css" %}">
+        {% block extra_styles%}{% endblock extra_styles %}
+        <link rel='icon' href="{% static 'favicon.ico' %}" type='image/x-icon'>
+        <title>{% block title %} {{ title }} {% endblock title %}</title>
+    </head>
+
+    <body>
+    
+    {% block form %}
+    
+    {% endblock form %}
+
+    {% block footer %}
+      {% include 'graduateWork/inc/_footer.html' %}
+    {% endblock footer %}
+    
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    {% block extra_scripts %}{% endblock extra_scripts %}
+    </body>
+</html>

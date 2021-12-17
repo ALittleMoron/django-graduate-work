@@ -1,0 +1,15 @@
+{% extends 'bibliofund/auth/base_auth.html' %}
+
+{% block title %}Регистрация{% endblock title %}
+
+{% block form %}
+<div class="container col-md-3">
+    <form class="auth-form" method="POST">
+        {% csrf_token %}
+        <h1 style="text-align: center;">Регистрация</h1>
+        {{ form.as_p }}
+        <p style="text-align: center;"><button type='submit', class='btn btn-primary btn-lg btm-block'>Зарегистрироваться</button></p>
+        <p style="text-align: center;"><a href="{% url "graduateWork/login" %}">или сразу войти</a></p>
+    </form>
+</div>
+{% endblock form %}

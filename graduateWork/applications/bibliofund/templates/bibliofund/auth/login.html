@@ -1,0 +1,15 @@
+{% extends 'bibliofund/auth/base_auth.html' %}
+
+{% block title %}Вход в систему{% endblock title %}
+
+{% block form %}
+<div class="container col-md-3 mt-5">
+    <form class='auth-form' method="POST" action="">
+        {% csrf_token %}
+        <h1 class='text-center'>Вход в систему</h1>
+        {{form.as_p }}
+        <p class='text-center'><button type='submit', class='btn btn-primary btn-lg btm-block'>Войти</button></p>
+        <p class='text-center'><a href="#" style="color: blue;">забыл пароль</a> | <a href="{% url 'graduateWork/registration' %}" style="color: blue;">зарегистрироваться</a></p>
+    </form>
+</div>
+{% endblock form %}

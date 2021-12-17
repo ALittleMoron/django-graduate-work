@@ -17,6 +17,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+PATH_TO_BIBLIOFUND = os.path.join(BASE_DIR, 'applications', 'bibliofund')
+
 sys.path.insert(0, os.path.join(BASE_DIR, 'applications'))
 
 # Quick-start development settings - unsuitable for production
@@ -67,7 +69,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'graduateWork', 'templates')
+            os.path.join(BASE_DIR, 'graduateWork', 'templates'),
+            os.path.join(PATH_TO_BIBLIOFUND, 'templates'),
             ],
         'APP_DIRS': True,
         'OPTIONS': {
