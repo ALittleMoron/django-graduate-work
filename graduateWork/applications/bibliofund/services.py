@@ -1,7 +1,9 @@
 import os
 from typing import Optional
 
+
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.db.models.query import QuerySet
 
 import bibliofund.models as models
@@ -20,16 +22,25 @@ def custom_upload_to(instance, filename: str) -> str:
     return os.path.join(folder, user_folder, filename)
 
 
+# TODO: Вынести все эти функции в одну. Тут много повторяющегося кода.
 def get_documents_by_user(username: str) -> QuerySet:
     """ Возвращает QuarySet документов по юзернейму со связыванием категорий. """
-    return models.Document.objects.filter(publisher__username=username).prefetch_related('category')
+    return models.Document.objects.filter(publisher__username=username).select_related('category')
 
 
 def get_documents_by_category(category_name: str) -> QuerySet:
     """ Возвращает QuarySet документов по категории. """
-    return models.Document.objects.filter(category__name=category_name).prefetch_related('category')
+    return models.Document.objects.filter(category__name=category_name).select_related('category')
 
 
 def get_all_documents() -> QuerySet:
     """ Возвращает QuarySet всех опубликованных документов. """
-    return models.Document.objects.filter(is_published=True).prefetch_related('category')
+    return models.Document.objects.filter(is_published=True).select_related('category')
+
+def get_searched_documents_by_param(param: str) -> QuerySet:
+    """ Возвращает QuarySet всех опубликованных документов по названию, имени категории или имени
+    пользователя. """
+    return models.Document.objects.filter(
+        Q(is_published=True),
+        Q(title__icontains=param) | Q(category__name__icontains=param) | Q(publisher__username=param),
+        ).select_related('category', 'publisher')

@@ -1,12 +1,16 @@
+from typing import Union
+
 from django.http import HttpResponse, HttpRequest
-from django.shortcuts import render
+from django.http.response import HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.views.generic import CreateView, FormView, ListView, DetailView, View
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 
 from .forms import CustomAuthenticationForm, CustomUserCreationForm
 from .models import Document
-from .services import get_all_documents, get_documents_by_category, get_documents_by_user
+from .services import (get_all_documents, get_documents_by_category, get_documents_by_user,
+                       get_searched_documents_by_param)
 
 
 class UserAccountView(ListView):
@@ -76,3 +80,16 @@ class DocumentDetailView(DetailView):
     template_name = 'bibliofund/documentDetail.html'
     model = Document
     context_object_name = 'document'
+
+
+class SearchResultView(ListView):
+    """ Класс вывода документов из поиска по названию. """
+
+    template_name = 'bibliofund/searchResult.html'
+    context_object_name = 'documents'
+    paginate_by = 18
+    
+    def get_queryset(self):
+        search_param = self.request.GET.get('param')
+        self.queryset = get_searched_documents_by_param(search_param)
+        return super().get_queryset()
