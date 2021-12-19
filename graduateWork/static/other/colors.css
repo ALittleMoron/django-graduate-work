@@ -1,0 +1,7 @@
+.hovered:hover {
+    color: blue !important;
+}
+
+.hoveredReverse:hover{
+    color: black !important;
+}

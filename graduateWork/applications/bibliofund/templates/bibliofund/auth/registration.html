@@ -3,9 +3,10 @@
 {% block title %}Регистрация{% endblock title %}
 
 {% block form %}
-<div class="container col-md-3">
+<div class="container col-md-3 mt-5">
     <form class="auth-form" method="POST">
         {% csrf_token %}
+        <a href="{% url 'graduateWork/homePage' %}" class="nav-link mx-1 text-muted hovered">← Назад</a>
         <h1 style="text-align: center;">Регистрация</h1>
         {{ form.as_p }}
         <p style="text-align: center;"><button type='submit', class='btn btn-primary btn-lg btm-block'>Зарегистрироваться</button></p>

@@ -1,27 +1,36 @@
 <header>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid mx-5">
-      <a class="navbar-brand" href="#">Фонд</a>
+      <a class="navbar-brand" href="{% url 'graduateWork/homePage' %}">Фонд</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarColor02">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="#">Категории</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class='nav-link'>|</a>
+          </li>
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a href="{% url 'graduateWork/account' request.user.username %}" class="nav-link">Личный кабинет</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a href="{% url 'graduateWork/logout' %}" class="nav-link">Выйти</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a href="{% url 'graduateWork/login' %}" class="nav-link">Войти</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a href="{% url 'graduateWork/registration' %}" class="nav-link">Зарегистрироваться</a>
           </li>
+        {% endif %}
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex" method="GET" action="{% url 'graduateWork/searchResult' %}">
+          <input class="form-control me-2" type="search" name='param' placeholder="Поиск" aria-label="Поиск">
           <button class="btn btn-outline-light" type="submit">Найти</button>
         </form>
       </div>
