@@ -7,22 +7,30 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarColor02">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Категории</a>
-          </li>
-          <li class="nav-item">
-            <a class='nav-link'>|</a>
-          </li>
         {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a href="{% url 'graduateWork/account' request.user.username %}" class="nav-link">Личный кабинет</a>
           </li>
+          <li class="nav-item">
+            <a class='nav-link'>|</a>
+          </li>
+          {% if request.user.is_superuser %}
+          <li class="nav-item">
+            <a href="{% url 'admin:index' %}" class="nav-link">Панель администрирования</a>
+          </li>
+          <li class="nav-item">
+            <a class='nav-link'>|</a>
+          </li>
+          {% endif %}
           <li class="nav-item">
             <a href="{% url 'graduateWork/logout' %}" class="nav-link">Выйти</a>
           </li>
         {% else %}
           <li class="nav-item">
             <a href="{% url 'graduateWork/login' %}" class="nav-link">Войти</a>
+          </li>
+          <li class="nav-item">
+            <a class='nav-link'>|</a>
           </li>
           <li class="nav-item">
             <a href="{% url 'graduateWork/registration' %}" class="nav-link">Зарегистрироваться</a>

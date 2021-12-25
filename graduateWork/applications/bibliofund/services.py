@@ -42,5 +42,6 @@ def get_searched_documents_by_param(param: str) -> QuerySet:
     пользователя. """
     return models.Document.objects.filter(
         Q(is_published=True),
-        Q(title__icontains=param) | Q(category__name__icontains=param) | Q(publisher__username=param),
+        Q(title__icontains=param) | Q(category__name__icontains=param) |
+        Q(publisher__username=param),
         ).select_related('category', 'publisher')

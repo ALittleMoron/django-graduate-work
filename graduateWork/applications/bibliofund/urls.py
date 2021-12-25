@@ -2,7 +2,9 @@ from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.urls import path
 
-from .views import HomePageView, UserAccountView, UserLoginView, UserRegisterView, SearchResultView
+from .views import (AllDocumentsView, DocumentByCategoryView, DocumentDetailView,
+                    DocumentUpdateView, HomePageView, UserAccountView, UserLoginView,
+                    UserRegisterView, SearchResultView)
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='graduateWork/homePage'),
@@ -17,5 +19,12 @@ urlpatterns = [
         {'next_page': settings.LOGOUT_REDIRECT_URL},
         name='graduateWork/logout'
     ),
-    
+    path('all-documents', AllDocumentsView.as_view(), name='graduateWork/allDocuments'),
+    path(
+        'documents-by-category/<slug:slug>',
+        DocumentByCategoryView.as_view(),
+        name='graduateWork/documentsByCategory'
+    ),
+    path('document/<slug:slug>', DocumentDetailView.as_view(), name='graduateWork/documentDetail'),
+    path('create-document', DocumentUpdateView.as_view(), name='graduateWork/documentCreate'),
 ]

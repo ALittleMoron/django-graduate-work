@@ -1,6 +1,44 @@
 {% extends 'graduateWork/base.html' %}
+{% load categories %}
 
 {% block main %}
-
-
+<div class="mx-5 mt-3 border">
+    <div class="row">
+        <div class="col-md-3">
+        <div class="mx-3 text-center">
+            <h3 class='text-center'>Пользователь {{author.username}}</h3>
+            <p>Общее число документов - {{documents.count}}</p>
+            {% if author.email %}<p>Почта - {{author.email}}</p>{% endif %}
+            <p>Стасус - {% if author.is_superuser %}супер-пользователь{% elif author.is_staff %}модератор{% else %}обычный пользователь{% endif %}</p>
+            <p>Зарегистрировался {{author.date_joined}}</p>
+            <a href="{% url 'graduateWork/documentCreate' %}" class='mb-2 btn btn-success'>Добавить документ</a>
+        </div>
+        </div>
+          <div class="col-md-9 border-start">
+            <h3 class='text-center'>Все опубликованные документы</h3>
+            <table class='table table-stripes'>
+                <thead>
+                    <tr>
+                      <th scope="col">Название</th>
+                      <th class='text-center' scope="col">Тип</th>
+                      <th class='text-center' scope="col">Опубликовано</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for document in documents %}
+                  {% if document.is_published or request.user.is_superuser or request.user == document.publisher %}
+                    <tr>
+                      <td>
+                        <a style='color: blue; text-decoration: none;' href="{% url 'graduateWork/documentDetail' document.slug %}">{{document.title}}</a>
+                      </td>
+                      <td class='text-center'>{{document.document_type|document_type_verbose}}</td>
+                      <td class='text-center'>{{document.published_at}}</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock main %}

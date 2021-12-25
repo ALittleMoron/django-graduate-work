@@ -47,3 +47,12 @@ class DocumentForm(forms.ModelForm):
         widgets = {
             # TODO: виджеты для полей.
         }
+
+
+class DocumentUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('title', 'abstract_ru', 'abstract_en', 'document_type', 'category')
+        widgets = {
+            # TODO: виджеты для полей.
+        }

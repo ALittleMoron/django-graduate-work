@@ -8,14 +8,14 @@ from .models import Document
 
 
 class UserIsPublisher(UserPassesTestMixin):
-    """ Класс проверки принадлежности пользователя к посту с картинкой. """
-    def get_image(self):
+    """ Класс проверки принадлежности пользователя к документу. """
+    def get_document(self):
         """ Метод, возвращающий инстанс документа по id. """
         return get_object_or_404(Document, slug=self.kwargs.get('slug'))
 
     def test_func(self) -> Optional[bool]:
         """ Метод, проверяющий пользователя на авторство в посте с картинкой.  """
         if self.request.user.is_authenticated:
-            return self.request.user == self.get_image().publisher
+            return self.request.user == self.get_document().publisher
         else:
             raise PermissionDenied('Извините, у вас нет доступа к этому разделу')
