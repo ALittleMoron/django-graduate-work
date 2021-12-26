@@ -1,0 +1,18 @@
+{% load categories %}
+{% load cache %}
+
+{% cache 120 category_bar %}
+{% get_all_categories as all_categories %}
+<div style='font: 12px !important;' class="list-group">
+  <a style="background: #0d6efd;" href="{% url 'graduateWork/homePage' %}" class="list-group-item list-group-item-action active"
+    >Все</a>
+  {% for item_category in all_categories %}
+  <a
+    href="{{ item_category.get_absolute_url }}"
+    class="list-group-item list-group-item-action"
+    >{{ item_category.name }}
+    <span class="badge rounded-pill bg-danger">{{item_category.num_docs}}</span>
+    </a>
+  {% endfor%}
+</div>
+{% endcache %}

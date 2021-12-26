@@ -1,5 +1,10 @@
 {% extends 'graduateWork/base.html' %}
+{% load static %}
 {% load categories %}
+
+{% block title %}
+аккаунт | {{author.username}}
+{% endblock title %}
 
 {% block main %}
 <div class="mx-5 mt-3 border">
@@ -11,7 +16,9 @@
             {% if author.email %}<p>Почта - {{author.email}}</p>{% endif %}
             <p>Стасус - {% if author.is_superuser %}супер-пользователь{% elif author.is_staff %}модератор{% else %}обычный пользователь{% endif %}</p>
             <p>Зарегистрировался {{author.date_joined}}</p>
-            <a href="{% url 'graduateWork/documentCreate' %}" class='mb-2 btn btn-success'>Добавить документ</a>
+            {% if request.user == author %}
+                <a href="{% url 'graduateWork/documentCreate' %}" class='mb-2 btn btn-success'>Добавить документ</a>
+            {% endif %}
         </div>
         </div>
           <div class="col-md-9 border-start">
@@ -22,6 +29,7 @@
                       <th scope="col">Название</th>
                       <th class='text-center' scope="col">Тип</th>
                       <th class='text-center' scope="col">Опубликовано</th>
+                      <th class='text-center' scope="col">Скачать</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +41,7 @@
                       </td>
                       <td class='text-center'>{{document.document_type|document_type_verbose}}</td>
                       <td class='text-center'>{{document.published_at}}</td>
+                      <td class='text-center'><a href="{{document.file.url}}"><img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a></td>
                     </tr>
                   {% endif %}
                 {% endfor %}

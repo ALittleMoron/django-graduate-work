@@ -21,7 +21,15 @@
    {% endblock %}
     
     {% block main %}
-      <h5>Обязательно переопредели блок main! Он не должен быть пустым!</h5>
+      <div class="mx-5 mt-3 row">
+          <div class="col-md-2">
+            {% block side_bar %}{% endblock side_bar %}
+          </div>
+          <div class="col-md-10">
+            {% block content %}{% endblock content %}
+            <h5>Обязательно переопредели блок main! Он не должен быть пустым!</h5>
+          </div>
+      </div>
     {% endblock %}
 
     {% block footer %}
