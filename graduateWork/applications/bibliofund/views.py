@@ -52,16 +52,6 @@ class UserRegisterView(CreateView, FormView):
     success_url = reverse_lazy('graduateWork/login')
 
 
-class HomePageView(View):
-    """ Класс вывода домашней страницы. """
-    
-    http_method_names = ['get']
-    template_name = 'bibliofund/homePage.html'
-    
-    def get(self, request: HttpRequest) -> HttpResponse:
-        return render(request, self.template_name)
-
-
 class AllDocumentsView(ListView):
     """ Класс вывода всех опубликованных документов. """
     

@@ -55,7 +55,7 @@ class Document(models.Model):
     is_published = models.BooleanField(default=False, verbose_name="Опубликовано?")
 
     def get_absolute_url(self):
-        return reverse("bibliofund/document-detail", kwargs={"slug": self.slug})
+        return reverse("graduateWork/documentDetail", kwargs={"slug": self.slug})
 
     def __str__(self) -> str:
         return f'{self.title} - {self.document_type}'
@@ -97,7 +97,7 @@ class Category(models.Model):
     slug = models.SlugField(null=True)
 
     def get_absolute_url(self):
-        return reverse("bibliofund/documents-by-category", kwargs={"slug": self.slug})
+        return reverse("graduateWork/documentsByCategory", kwargs={"slug": self.slug})
 
     def __str__(self) -> str:
         return f'{self.name} - {self.category_type}'
