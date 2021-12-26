@@ -1,16 +1,14 @@
 {% extends 'graduateWork/base.html' %}
 
-
 {% block title %}
 Все документы
 {% endblock title %}
 
 
-{% block side_bar %}
-  {% include 'bibliofund/inc/category.html' %}
-{% endblock side_bar %}
-
-
 {% block content %}
-  
+{% if documents %}
+  {% include 'bibliofund/inc/document_table.html' %}
+{% else %}
+  <h3 class='text-center'>К сожалению, в данном разделе пока нет ни одного документа.</h3>
+{% endif %}
 {% endblock content %}

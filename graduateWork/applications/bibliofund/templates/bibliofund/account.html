@@ -22,6 +22,7 @@
         </div>
         </div>
           <div class="col-md-9 border-start">
+            {% if documents %}
             <h3 class='text-center'>Все опубликованные документы</h3>
             <table class='table table-stripes'>
                 <thead>
@@ -47,6 +48,9 @@
                 {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+              <h3 class="text-center">К сожалению, пользователь пока не опубликовал ни одного документа.</h3>
+            {% endif %}
         </div>
     </div>
 </div>

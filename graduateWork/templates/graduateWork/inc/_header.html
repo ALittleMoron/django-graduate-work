@@ -37,6 +37,7 @@
           </li>
         {% endif %}
         </ul>
+        <button type="button" class="btn btn-primary me-2" id="liveToastBtn">?</button>
         <form class="d-flex" method="GET" action="{% url 'graduateWork/searchResult' %}">
           <input class="form-control me-2" type="search" name='param' placeholder="Поиск" aria-label="Поиск">
           <button class="btn btn-outline-light" type="submit">Найти</button>

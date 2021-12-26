@@ -3,11 +3,12 @@
 
 {% cache 120 category_bar %}
 {% get_all_categories as all_categories %}
-<div style='font: 12px !important;' class="list-group">
+<div class="list-group ">
   <a style="background: #0d6efd;" href="{% url 'graduateWork/homePage' %}" class="list-group-item list-group-item-action active"
     >Все</a>
   {% for item_category in all_categories %}
   <a
+    style='font-size: 0.8rem;'
     href="{{ item_category.get_absolute_url }}"
     class="list-group-item list-group-item-action"
     >{{ item_category.name }}

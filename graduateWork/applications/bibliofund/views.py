@@ -1,5 +1,6 @@
 from typing import Any, Dict, Union
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpRequest
 from django.http.response import HttpResponseRedirect
@@ -28,7 +29,7 @@ class UserAccountView(ListView):
     
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['author'] = self.queryset[0].publisher
+        context['author'] = get_user_model().objects.get(username=self.kwargs.get('username'))
         return context
     
     def get_queryset(self):

@@ -1,0 +1,26 @@
+{% load static %}
+{% load categories %}
+
+
+<table class='table table-stripes'>
+    <thead>
+        <tr>
+          <th scope="col">Название</th>
+          <th class='text-center' scope="col">Тип</th>
+          <th class='text-center' scope="col">Опубликовано</th>
+          <th class='text-center' scope="col">Скачать</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for document in documents %}
+        <tr>
+          <td>
+            <a style='color: blue; text-decoration: none;' href="{% url 'graduateWork/documentDetail' document.slug %}">{{document.title}}</a>
+          </td>
+          <td class='text-center'>{{document.document_type|document_type_verbose}}</td>
+          <td class='text-center'>{{document.published_at}}</td>
+          <td class='text-center'><a href="{{document.file.url}}"><img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
