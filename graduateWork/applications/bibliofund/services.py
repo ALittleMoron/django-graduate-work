@@ -28,9 +28,9 @@ def get_documents_by_user(username: str) -> QuerySet:
     return models.Document.objects.filter(publisher__username=username).select_related('category')
 
 
-def get_documents_by_category(category_name: str) -> QuerySet:
+def get_documents_by_category(category_slug: str) -> QuerySet:
     """ Возвращает QuarySet документов по категории. """
-    return models.Document.objects.filter(category__name=category_name).select_related('category')
+    return models.Document.objects.filter(category__slug=category_slug).select_related('category')
 
 
 def get_all_documents() -> QuerySet:

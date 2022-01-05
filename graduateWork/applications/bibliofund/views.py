@@ -56,19 +56,29 @@ class UserRegisterView(CreateView, FormView):
 class AllDocumentsView(ListView):
     """ Класс вывода всех опубликованных документов. """
     
-    template_name = 'bibliofund/allDocuments.html'
+    template_name = 'bibliofund/documents.html'
     context_object_name = 'documents'
     queryset = get_all_documents()
     paginate_by = 25
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Все документы'
+        return context
 
 
 class DocumentByCategoryView(ListView):
     """ Класс вывода документов по выбранной категории. """
     
-    template_name = 'bibliofund/documentsByCategory.html'
+    template_name = 'bibliofund/documents.html'
     context_object_name = 'documents'
     paginate_by = 25
     slug_url_kwarg = 'slug'
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Документы по категории'
+        return context
 
     def get_queryset(self):
         self.queryset = get_documents_by_category(self.kwargs['slug'])
@@ -82,7 +92,11 @@ class DocumentDetailView(DetailView):
     model = Document
     context_object_name = 'document'
     slug_url_kwarg = 'slug'
-    
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Документ'
+        return context
 
 
 class SearchResultView(ListView):
@@ -96,6 +110,11 @@ class SearchResultView(ListView):
         search_param = self.request.GET.get('param')
         self.queryset = get_searched_documents_by_param(search_param)
         return super().get_queryset()
+    
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Поиск'
+        return context
 
 
 class AddDocumentView(LoginRequiredMixin, CreateView):
@@ -110,16 +129,6 @@ class AddDocumentView(LoginRequiredMixin, CreateView):
         form.instance.publisher = self.request.user
         self.object = form.save()
         return HttpResponseRedirect(self.object.get_absolute_url())
-    
-    def post(self, request, *args, **kwargs):
-        """ Переопределенный метод клааса CreateView для отправки сообщения об
-        ошибки валидации формы.
-        """
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
 
 
 class DucumentDetailView(DetailView):

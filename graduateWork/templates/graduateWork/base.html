@@ -28,7 +28,11 @@
               <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-              Сайт представляет собой программную реализацию для выпускной квалификационной работы 
+              <p align='justify'>
+                Сайт представляет собой программную реализацию для выпускной квалификационной работы
+                по направлению "Математическое обеспечение и админстрирование информационных систем"
+                02.03.03 кафедры ПОВТ факультета ФИТУ университета ЮРГПУ (НПИ) им. М.И.Платова.
+              </p>
             </div>
           </div>
     </div>
@@ -50,17 +54,7 @@
     
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
     {% block extra_scripts %}
-    <script>
-        var toastTrigger = document.getElementById('liveToastBtn')
-        var toastLiveExample = document.getElementById('liveToast')
-        if (toastTrigger) {
-            toastTrigger.addEventListener('click', function () {
-                var toast = new bootstrap.Toast(toastLiveExample)
-
-            toast.show()
-          })
-        }
-    </script>
+    <script src="{% static 'other/info.js' %}"></script>
     {% endblock extra_scripts %}
     </body>
 </html>
