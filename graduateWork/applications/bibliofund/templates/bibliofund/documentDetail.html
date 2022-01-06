@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="border-start">
-    <div class="row">
+    <div class="row align-items-start">
         <div class="col"></div>
         <div class="col-md-6">
             <h4 class='text-center'>Информация об авторе</h4>
@@ -13,11 +13,14 @@
                     <tr>
                       <th class='text-center' scope="col">Псевдоним</th>
                       <th class='text-center' scope="col">Почта</th>
+                      <th class='text-center' scope="col">Дата регистрации</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                      <td class='text-center border-top'>{{document.publisher.username}}</td>
+                      <td class='text-center border-top'>
+                          <a href="{% url 'graduateWork/account' document.publisher.username %}">{{document.publisher.username}}</a>
+                        </td>
                       <td class='text-center border-top'>
                           {% if document.publisher.email %}
                             {{document.publisher.email}}
@@ -25,11 +28,17 @@
                             Не указана
                           {% endif %}
                       </td>
+                      <td class="text-center border-top">{{document.publisher.date_joined}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col"></div>
+        <div class="col" align='end'>
+          {% if request.user == document.publisher %}
+            <a href="{% url 'graduateWork/documentUpdate' slug=document.slug %}" class="btn btn-warning">Обновить</a>
+            <a href="{% url 'graduateWork/documentDelete' slug=document.slug %}" class="btn btn-danger">Удалить</a>
+          {% endif %}
+        </div>
     </div>
 
     <h4 class="mx-2 border-top text-center">«{{document.title}}»</h4>
@@ -62,7 +71,7 @@
             </tbody>
         </table>
 
-        <div style='text-align:center;display:block;'>
+        <div style='text-align:end;display:block;'>
             <a class='btn btn-success' style='text-decoration: none; color: white;' href="{{document.file.url}}">Скачать <img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a>
         </div>
     </div>

@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.forms.models import ModelChoiceField
 
-from .models import Document
+from .models import Document, Category
 
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -15,24 +16,20 @@ class CustomAuthenticationForm(AuthenticationForm):
 
     class Meta:
         model = User
-        fields = ()
 
 
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         label='Имя пользователя',
-        help_text="Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.",
         widget=forms.TextInput(attrs={"class": 'form-control'}))
     email = forms.EmailField(
         label='E-mail',
         widget=forms.EmailInput(attrs={"class": 'form-control'}))
     password1 = forms.CharField(
         label='Пароль',
-        help_text="Пароль должен быть нераспространенным, не состоять только из цифр, состоять более чем из 8 символов.",
         widget=forms.PasswordInput(attrs={"class": 'form-control'}))
     password2 = forms.CharField(
         label='Подтверждение пароля',
-        help_text="Пароли должны совпадать.",
         widget=forms.PasswordInput(attrs={"class": 'form-control'}))
 
     class Meta:
@@ -45,7 +42,9 @@ class DocumentForm(forms.ModelForm):
         model = Document
         fields = ('title', 'abstract_ru', 'abstract_en', 'document_type', 'category', 'file',)
         widgets = {
-            # TODO: виджеты для полей.
+            'title': forms.TextInput(attrs={"class": 'form-control'}),
+            'abstract_ru': forms.Textarea(attrs={"class": 'form-control'}),
+            'abstract_en': forms.Textarea(attrs={"class": 'form-control'}),
         }
 
 
@@ -54,5 +53,7 @@ class DocumentUpdateForm(forms.ModelForm):
         model = Document
         fields = ('title', 'abstract_ru', 'abstract_en', 'document_type', 'category')
         widgets = {
-            # TODO: виджеты для полей.
+            'title': forms.TextInput(attrs={"class": 'form-control'}),
+            'abstract_ru': forms.Textarea(attrs={"class": 'form-control'}),
+            'abstract_en': forms.Textarea(attrs={"class": 'form-control'}),
         }

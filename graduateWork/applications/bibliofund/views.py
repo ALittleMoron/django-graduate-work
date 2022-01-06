@@ -10,7 +10,8 @@ from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView, UpdateView
 
-from .forms import CustomAuthenticationForm, CustomUserCreationForm, DocumentForm
+from .forms import (CustomAuthenticationForm, CustomUserCreationForm, DocumentForm,
+                    DocumentUpdateForm)
 from .mixins import UserIsPublisher
 from .models import Document
 from .services import (get_all_documents, get_document, get_documents_by_category,
@@ -85,24 +86,6 @@ class DocumentByCategoryView(ListView):
         return super().get_queryset()
 
 
-class DocumentDetailView(DetailView):
-    """ Класс вывода подробной информации одного документа. """
-    
-    template_name = 'bibliofund/documentDetail.html'
-    model = Document
-    context_object_name = 'document'
-    slug_url_kwarg = 'slug'
-
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Документ'
-        return context
-    
-    def get_queryset(self):
-        self.queryset = get_document(self.kwargs['slug'])
-        return super().get_queryset()
-
-
 class SearchResultView(ListView):
     """ Класс вывода документов из поиска по названию. """
 
@@ -121,10 +104,10 @@ class SearchResultView(ListView):
         return context
 
 
-class AddDocumentView(LoginRequiredMixin, CreateView):
+class DocumentCreateView(LoginRequiredMixin, CreateView):
     """  """
     form_class = DocumentForm
-    template_name = ''
+    template_name = 'bibliofund/documentForm.html'
     
     def form_valid(self, form: DocumentForm) -> HttpResponseRedirect:
         """ Переопределенный метод класса CreateView для добавление автора
@@ -135,32 +118,35 @@ class AddDocumentView(LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.object.get_absolute_url())
 
 
-class DucumentDetailView(DetailView):
-    """ Класс отображения подробной информации о картинке. """
+class DocumentDetailView(DetailView):
+    """ Класс вывода подробной информации одного документа. """
+    
+    template_name = 'bibliofund/documentDetail.html'
     model = Document
-    template_name = ""
-    context_object_name = ''
+    context_object_name = 'document'
+    slug_url_kwarg = 'slug'
 
-
-class DocumentUpdateView(LoginRequiredMixin, CreateView):
-    """ """
-    model = Document
-    form_class = ...
-    template_name = ''
-    context_object_name = ''
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Документ'
+        return context
+    
+    def get_queryset(self):
+        self.queryset = get_document(self.kwargs['slug'])
+        return super().get_queryset()
 
 
 class DocumentUpdateView(UserIsPublisher, UpdateView):
     """ """
     model = Document
-    form_class = ...
-    template_name = ''
-    context_object_name = ''
+    form_class = DocumentUpdateForm
+    template_name = 'bibliofund/documentForm.html'
+    context_object_name = 'document'
 
 
 class DocumentDeleteView(UserIsPublisher, DeleteView):
     """ """
     model = Document
-    template_name = ''
-    context_object_name = ''
+    template_name = 'bibliofund/documentDelete.html'
+    context_object_name = 'document'
     success_url = '/'

@@ -1,0 +1,31 @@
+{% extends 'bibliofund/auth/base_auth.html' %}
+
+
+{% block title %}Добавить документ{% endblock title %}
+
+
+{% block form %}
+  <h2 class="text-center">
+    Вы собираетесь <span class="text-danger">удалить</span> "<i>{{ document }}</i>"
+  </h2>
+  <p class="text-center">Вы уверены, что хотите это сделать?</p>
+  <div class="form-group">
+    <form
+      method="post"
+      class="d-flex flex-column align-items-center justify-content-center"
+      >
+      {% csrf_token %}
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'graduateWork/documentDetail' document.slug %}" class="btn btn-primary">Назад</a>
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-danger">Удалить</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock form %}
+
+
+{% block footer %}{% endblock footer %}

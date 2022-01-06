@@ -1,0 +1,46 @@
+{% extends 'bibliofund/auth/base_auth.html' %}
+
+
+{% block title %}Добавить документ{% endblock title %}
+
+
+{% block form %}
+<div class="container mt-5">
+    <form class="doc-form" method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <a href="{% url 'graduateWork/homePage' %}" class="nav-link mx-1 text-muted hovered">← Назад</a>
+        <h1 class='text-center'>Документ</h1>
+        {% for field in form %}
+            <div class="mb-2">
+                {{ field.errors }}
+                {{ field.label_tag }} <br> {{ field }}
+                {% if field.help_text %}
+                  <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <p class='text-center'><button type='submit', class='btn btn-primary btn-lg btm-block'>Добавить</button></p>
+    </form>
+</div>
+{% endblock form %}
+
+
+{% block extra_styles %}
+<style>
+.doc-form {
+    margin: 60px auto 30px;
+    padding: 10px;
+    position: relative;
+
+    box-shadow: 
+        0 0 1px rgba(0, 0, 0, 0.3), 
+        0 3px 4px rgba(0, 0, 0, 0.3), 
+        inset 0 1px rgba(255,255,255,1),
+        inset 0 -1px 0px rgba(0,0,0,0.25);
+    border-radius: 5px;
+}
+</style>
+{% endblock extra_styles %}
+
+
+{% block footer %}{% endblock footer %}

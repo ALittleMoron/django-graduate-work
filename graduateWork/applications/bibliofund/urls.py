@@ -2,9 +2,9 @@ from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.urls import path
 
-from .views import (AllDocumentsView, DocumentByCategoryView, DocumentDetailView,
-                    DocumentUpdateView, UserAccountView, UserLoginView,
-                    UserRegisterView, SearchResultView)
+from .views import (AllDocumentsView, DocumentByCategoryView, DocumentCreateView,
+                    DocumentDeleteView, DocumentDetailView,DocumentUpdateView, UserAccountView,
+                    UserLoginView, UserRegisterView, SearchResultView)
 
 urlpatterns = [
     path('', AllDocumentsView.as_view(), name='graduateWork/homePage'),
@@ -24,6 +24,16 @@ urlpatterns = [
         DocumentByCategoryView.as_view(),
         name='graduateWork/documentsByCategory'
     ),
+    path('document/create', DocumentCreateView.as_view(), name='graduateWork/documentCreate'),
     path('document/<slug:slug>', DocumentDetailView.as_view(), name='graduateWork/documentDetail'),
-    path('create-document', DocumentUpdateView.as_view(), name='graduateWork/documentCreate'),
+    path(
+        'document/<slug:slug>/update',
+        DocumentUpdateView.as_view(),
+        name='graduateWork/documentUpdate'
+    ),
+    path(
+        'document/<slug:slug>/delete',
+        DocumentDeleteView.as_view(),
+        name='graduateWork/documentDelete'
+    ),
 ]

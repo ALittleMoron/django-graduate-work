@@ -13,6 +13,7 @@
     </thead>
     <tbody>
     {% for document in documents %}
+      {% if document.is_published %}
         <tr>
           <td>
             <a style='color: blue; text-decoration: none;' href="{% url 'graduateWork/documentDetail' document.slug %}">{{document.title}}</a>
@@ -21,6 +22,7 @@
           <td class='text-center'>{{document.published_at}}</td>
           <td class='text-center'><a href="{{document.file.url}}"><img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a></td>
         </tr>
+      {% endif %}
     {% endfor %}
     </tbody>
 </table>
