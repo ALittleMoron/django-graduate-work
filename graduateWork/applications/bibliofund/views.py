@@ -13,8 +13,8 @@ from django.views.generic.edit import DeleteView, UpdateView
 from .forms import CustomAuthenticationForm, CustomUserCreationForm, DocumentForm
 from .mixins import UserIsPublisher
 from .models import Document
-from .services import (get_all_documents, get_documents_by_category, get_documents_by_user,
-                       get_searched_documents_by_param)
+from .services import (get_all_documents, get_document, get_documents_by_category,
+                       get_documents_by_user, get_searched_documents_by_param)
 
 
 class UserAccountView(ListView):
@@ -97,6 +97,10 @@ class DocumentDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Документ'
         return context
+    
+    def get_queryset(self):
+        self.queryset = get_document(self.kwargs['slug'])
+        return super().get_queryset()
 
 
 class SearchResultView(ListView):
