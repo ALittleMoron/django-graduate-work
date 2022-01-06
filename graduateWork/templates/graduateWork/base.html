@@ -21,21 +21,6 @@
    {% endblock %}
     
     {% block main %}
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-              <strong class="me-auto">Информация по сайту</strong>
-              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-              <p align='justify'>
-                Сайт представляет собой программную реализацию для выпускной квалификационной работы
-                по направлению "Математическое обеспечение и админстрирование информационных систем"
-                02.03.03 кафедры ПОВТ факультета ФИТУ университета ЮРГПУ (НПИ) им. М.И.Платова.
-              </p>
-            </div>
-          </div>
-    </div>
       <div class="mx-5 mt-3 row">
           <div class="col-md-2">
             {% block side_bar %}{% include 'bibliofund/inc/category.html' %}{% endblock side_bar %}
