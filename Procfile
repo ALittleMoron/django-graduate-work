@@ -1,1 +1,1 @@
-web: gunicorn graduateWork.graduateWork.wsgi --log-file - --chdir=/graduateWork/
+web: gunicorn graduateWork.graduateWork.wsgi --log-file -
