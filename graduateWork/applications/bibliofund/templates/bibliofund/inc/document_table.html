@@ -1,5 +1,6 @@
 {% load static %}
 {% load categories %}
+{% load file_name %}
 
 
 <table class='table table-stripes'>
@@ -20,7 +21,7 @@
           </td>
           <td class='text-center'>{{document.document_type|document_type_verbose}}</td>
           <td class='text-center'>{{document.published_at}}</td>
-          <td class='text-center'><a href="{{document.file.url}}"><img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a></td>
+          <td class='text-center'><a href="{% url 'graduateWork/download' username=document.publisher.username file_name=document.file.name|get_file_name %}"><img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a></td>
         </tr>
       {% endif %}
     {% endfor %}

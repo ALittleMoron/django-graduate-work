@@ -1,8 +1,10 @@
 from typing import Any, Dict, Union
+import os
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpRequest
+from django.http import Http404, HttpResponse, HttpRequest, FileResponse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView, FormView, ListView, DetailView, View
@@ -16,6 +18,16 @@ from .mixins import UserIsPublisher
 from .models import Document
 from .services import (get_all_documents, get_document, get_documents_by_category,
                        get_documents_by_user, get_searched_documents_by_param)
+
+
+class Download(View):
+    def get(self, request, *args, **kwargs):
+        file_name = self.kwargs.get('file_name')
+        username = self.kwargs.get('username')
+        file_path = os.path.join(settings.BASE_DIR, 'media', 'documents', f'user_{username}', file_name)
+        if os.path.exists(file_path):
+            return FileResponse(open(file_path, 'rb'))
+        raise Http404
 
 
 class UserAccountView(ListView):

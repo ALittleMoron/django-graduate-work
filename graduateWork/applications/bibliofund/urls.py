@@ -2,12 +2,13 @@ from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.urls import path
 
-from .views import (AllDocumentsView, DocumentByCategoryView, DocumentCreateView,
+from .views import (Download, AllDocumentsView, DocumentByCategoryView, DocumentCreateView,
                     DocumentDeleteView, DocumentDetailView,DocumentUpdateView, UserAccountView,
                     UserLoginView, UserRegisterView, SearchResultView)
 
 urlpatterns = [
     path('', AllDocumentsView.as_view(), name='graduateWork/homePage'),
+    path('download/<str:username>/<str:file_name>', Download.as_view(), name='graduateWork/download'),
     path('search', SearchResultView.as_view(), name='graduateWork/searchResult'),
     path('account/<str:username>', UserAccountView.as_view(), name='graduateWork/account'),
     path('account/auth/login', UserLoginView.as_view(), name='graduateWork/login'),

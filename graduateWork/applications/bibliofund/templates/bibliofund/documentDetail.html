@@ -1,5 +1,6 @@
 {% extends 'graduateWork/base.html' %}
 {% load categories %}
+{% load file_name %}
 {% load static %}
 
 {% block content %}
@@ -72,7 +73,7 @@
         </table>
 
         <div style='text-align:end;display:block;'>
-            <a class='btn btn-success' style='text-decoration: none; color: white;' href="{{document.file.url}}">Скачать <img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a>
+            <a class='btn btn-success' style='text-decoration: none; color: white;' href="{% url 'graduateWork/download' username=document.publisher.username file_name=document.file.name|get_file_name %}">Скачать <img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a>
         </div>
     </div>
 </div>
