@@ -7,6 +7,12 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarColor02">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+              <a href="{% url 'graduateWork/newestDocuments' %}" class="nav-link text-white">Новые</a>
+          </li>
+          <li class="nav-item">
+              <a href="{% url 'graduateWork/relevantDocuments' %}" class="nav-link text-white me-5">Релевантные</a>
+          </li>
         {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a href="{% url 'graduateWork/account' request.user.username %}" class="nav-link">Личный кабинет</a>
@@ -37,7 +43,6 @@
           </li>
         {% endif %}
         </ul>
-        <button type="button" class="btn btn-primary me-2" id="liveToastBtn">?</button>
         <form class="d-flex" method="GET" action="{% url 'graduateWork/searchResult' %}">
           <input class="form-control me-2" type="search" name='param' placeholder="Поиск" aria-label="Поиск">
           <button class="btn btn-outline-light" type="submit">Найти</button>

@@ -1,8 +1,30 @@
+from tabnanny import verbose
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
 from .services import custom_upload_to
+
+
+class FileStatistic(models.Model):
+    """ Класс модели статистики файла. """
+    download_count = models.IntegerField(
+        default=0,
+        verbose_name='Количество скачиваний'
+    )
+    view_count = models.IntegerField(
+        default=0,
+        verbose_name='Количество просмотров'
+    )
+
+    def increment_field(self, field_name: str) -> None:
+        setattr(self, field_name, models.F(field_name) + 1)
+        self.save(update_fields=[field_name])
+    
+    class Meta:
+        verbose_name = "Стасистика"
+        verbose_name_plural = "Статистики"
+        ordering = ["-view_count"]
 
 
 class Document(models.Model):
@@ -42,6 +64,12 @@ class Document(models.Model):
         max_length=10,
         verbose_name="Формат файла"
     )
+    statistic = models.OneToOneField(
+        FileStatistic,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     publisher = models.ForeignKey(
         get_user_model(),
         verbose_name="Автор",
@@ -71,7 +99,6 @@ class Document(models.Model):
     class Meta:
         verbose_name = "Документ"
         verbose_name_plural = "Документы"
-        ordering = ['updated_at']
 
 
 class Category(models.Model):
@@ -112,3 +139,4 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = "Категории"
+

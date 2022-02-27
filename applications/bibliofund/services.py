@@ -33,9 +33,14 @@ def get_documents_by_category(category_slug: str) -> QuerySet:
     return models.Document.objects.filter(category__slug=category_slug).select_related('category')
 
 
-def get_all_documents() -> QuerySet:
+def get_all_documents(order_by=None) -> QuerySet:
     """ Возвращает QuarySet всех опубликованных документов. """
-    return models.Document.objects.filter(is_published=True).select_related('category', 'publisher')
+    if order_by:
+        return models.Document.objects.filter(is_published=True)\
+                  .order_by(order_by).select_related('category', 'publisher')
+    
+    return models.Document.objects.filter(is_published=True)\
+               .select_related('category', 'publisher')
 
 
 def get_searched_documents_by_param(param: str) -> QuerySet:

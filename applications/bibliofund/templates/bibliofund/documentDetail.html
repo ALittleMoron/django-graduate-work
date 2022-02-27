@@ -49,7 +49,8 @@
         <h5>Аннотация на английском:</h5>
         <p align='justify'>{{document.abstract_en}}</p>
 
-        <table class='table table-borderless table-sm'>
+        {{statistic}}
+        <table class='table table-borderless table-sm mb-2'>
             <thead>
                 <tr>
                   <th class='text-center' scope="col">Тип</th>
@@ -72,6 +73,20 @@
             </tbody>
         </table>
 
+        <table class="table table-borderless table-sm">
+            <thread>
+                <tr>
+                    <th class="text-center" scope='col'>Число скачиваний</th>
+                    <th class="text-center" scope='col'>Число просмотров</th>
+                </tr>
+            </thread>
+            <tbody>
+                <tr>
+                    <td class="text-center border-top">{{statistic.download_count}}</td>
+                    <td class="text-center border-top">{{statistic.view_count}}</td>
+                </tr>
+            </tbody>
+        </table>
         <div style='text-align:end;display:block;'>
             <a class='btn btn-success' style='text-decoration: none; color: white;' href="{% url 'graduateWork/download' username=document.publisher.username file_name=document.file.name|get_file_name %}">Скачать <img src="{% static 'download.png' %}" height='20px;' alt="скачать"></a>
         </div>

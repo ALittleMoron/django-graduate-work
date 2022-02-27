@@ -3,17 +3,18 @@ from django.conf import settings
 from django.urls import path
 
 from .views import (Download, AllDocumentsView, DocumentByCategoryView, DocumentCreateView,
-                    DocumentDeleteView, DocumentDetailView,DocumentUpdateView, UserAccountView,
+                    DocumentDeleteView, DocumentDetailView,DocumentUpdateView, NewestDocumentsView, RelevantDocumentsView, UserAccountView,
                     UserLoginView, UserRegisterView, SearchResultView)
 
 urlpatterns = [
     path('', AllDocumentsView.as_view(), name='graduateWork/homePage'),
+    path('newest-documents', NewestDocumentsView.as_view(), name='graduateWork/newestDocuments'),
+    path('relevant-documents', RelevantDocumentsView.as_view(), name='graduateWork/relevantDocuments'),
     path('download/<str:username>/<str:file_name>', Download.as_view(), name='graduateWork/download'),
     path('search', SearchResultView.as_view(), name='graduateWork/searchResult'),
     path('account/<str:username>', UserAccountView.as_view(), name='graduateWork/account'),
     path('account/auth/login', UserLoginView.as_view(), name='graduateWork/login'),
     path('account/auth/registration', UserRegisterView.as_view(), name='graduateWork/registration'),
-    # path('account/change_password')
     path(
         'account/auth/logout',
         LogoutView.as_view(),

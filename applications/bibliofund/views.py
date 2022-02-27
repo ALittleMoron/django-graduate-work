@@ -15,7 +15,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from .forms import (CustomAuthenticationForm, CustomUserCreationForm, DocumentForm,
                     DocumentUpdateForm)
 from .mixins import UserIsPublisher
-from .models import Document
+from .models import Document, FileStatistic
 from .services import (get_all_documents, get_document, get_documents_by_category,
                        get_documents_by_user, get_searched_documents_by_param)
 
@@ -26,6 +26,9 @@ class Download(View):
         username = self.kwargs.get('username')
         file_path = os.path.join(settings.BASE_DIR, 'media', 'documents', f'user_{username}', file_name)
         if os.path.exists(file_path):
+            file_filter_path = os.path.join('documents', f'user_{username}', file_name)
+            stat = Document.objects.get(file=file_filter_path).statistic
+            stat.increment_field('download_count')
             return FileResponse(open(file_path, 'rb'))
         raise Http404
 
@@ -66,18 +69,30 @@ class UserRegisterView(CreateView, FormView):
     success_url = reverse_lazy('graduateWork/login')
 
 
-class AllDocumentsView(ListView):
-    """ Класс вывода всех опубликованных документов. """
-    
+class AllDocumentsBaseView(ListView):
+    """ Базовый класс вывода всех опубликованных документов """
     template_name = 'bibliofund/documents.html'
     context_object_name = 'documents'
-    queryset = get_all_documents()
     paginate_by = 25
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['title'] = 'Все документы'
         return context
+
+class AllDocumentsView(AllDocumentsBaseView):
+    """ Класс вывода всех опубликованных документов. """
+    queryset = get_all_documents(order_by='?')
+
+
+class NewestDocumentsView(AllDocumentsBaseView):
+    """ Класс вывода новейших документов """
+    queryset = get_all_documents(order_by='-updated_at')
+
+
+class RelevantDocumentsView(AllDocumentsBaseView):
+    """ Класс вывода релевантных документов """
+    queryset = get_all_documents(order_by='-statistic__download_count')
 
 
 class DocumentByCategoryView(ListView):
@@ -137,7 +152,15 @@ class DocumentDetailView(DetailView):
     model = Document
     context_object_name = 'document'
     slug_url_kwarg = 'slug'
-
+    
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.statistic = FileStatistic.objects.get(document=self.object)
+        self.statistic.increment_field('view_count')
+        self.statistic.refresh_from_db()
+        context = self.get_context_data(object=self.object, statistic=self.statistic)
+        return self.render_to_response(context)
+    
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['title'] = 'Документ'

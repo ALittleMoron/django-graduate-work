@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Document, Category
+from .models import Document, Category, FileStatistic
 
 
 class DocumentAdmin(admin.ModelAdmin):
@@ -18,6 +18,10 @@ class DocumentAdmin(admin.ModelAdmin):
     readonly_fields = ('published_at', 'file_format',)
 
 
+class FileStatisticAdmin(admin.ModelAdmin):
+    pass
+
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         "id",
@@ -31,4 +35,5 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Document, DocumentAdmin)
+admin.site.register(FileStatistic, FileStatisticAdmin)
 admin.site.register(Category, CategoryAdmin)

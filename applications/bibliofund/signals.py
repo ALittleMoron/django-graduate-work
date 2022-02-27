@@ -1,9 +1,9 @@
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from slugify import slugify
 
-from .models import Category, Document
+from .models import Category, Document, FileStatistic
 
 
 @receiver(pre_save, sender=Document)
@@ -29,3 +29,12 @@ def presave_slug(sender, instance, *args, **kwargs):
         instance.slug = slugify(instance.title)
     elif instance.__class__.__name__ == "Category":
         instance.slug = slugify(instance.name)
+
+
+@receiver(post_save, sender=Document)
+def create_favorites(sender, instance, created, **kwargs):
+    if created:
+        statistic = FileStatistic()
+        statistic.save()
+        instance.statistic = statistic
+        instance.save()
