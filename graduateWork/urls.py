@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('bibliofund.urls')),
+    path('feedback/', include('feedback.urls'))
 ]
 
 

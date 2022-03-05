@@ -31,7 +31,10 @@
             {% endblock content %}
           </div>
       </div>
-    {% endblock %}
+      {% endblock %}
+      <div style="position: fixed; bottom: 0; right: 0;" class='mb-3 me-3'>
+          <a href="{% url 'feedbackMSG' %}"><img src="{% static 'message.png' %}" width='30px' height='auto' alt="Связаться с нами"></a>
+      </div>
 
     {% block footer %}
       {% include 'graduateWork/inc/_footer.html' %}

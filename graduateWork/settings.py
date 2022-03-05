@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'bibliofund',
+    'feedback',
 
     'django_cleanup.apps.CleanupConfig',
 ]

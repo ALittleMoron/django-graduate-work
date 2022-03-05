@@ -61,7 +61,7 @@ class UserLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
 
 
-class UserRegisterView(CreateView, FormView):
+class UserRegisterView(CreateView):
     """ Класс обработки регистрации пользователя в системе. """
     
     template_name = 'bibliofund/auth/registration.html'

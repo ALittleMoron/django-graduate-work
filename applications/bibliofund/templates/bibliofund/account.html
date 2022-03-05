@@ -19,6 +19,7 @@
             {% if request.user == author %}
                 <a href="{% url 'graduateWork/documentCreate' %}" class='mb-2 btn btn-success'>Добавить документ</a>
             {% endif %}
+            <p class="mt-4">Есть вопросы? <a href="{% url 'feedbackMSG' %}">Свяжитесь с нами.</a></p>
         </div>
         </div>
           <div class="col-md-9 border-start">
