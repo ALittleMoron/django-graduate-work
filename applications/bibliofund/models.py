@@ -20,7 +20,7 @@ class FileStatistic(models.Model):
     def increment_field(self, field_name: str) -> None:
         setattr(self, field_name, models.F(field_name) + 1)
         self.save(update_fields=[field_name])
-    
+
     class Meta:
         verbose_name = "Стасистика"
         verbose_name_plural = "Статистики"
@@ -29,7 +29,7 @@ class FileStatistic(models.Model):
 
 class Document(models.Model):
     """ Класс модели документа.
-    
+
     Документ - любой текстовый файл. В основном, под ними подразумеваются научные работы,
     контрольные, лабораторные, курсовые и дипломные работы, эссе, лекции, методички, сочинения
     и так далее.
@@ -46,11 +46,11 @@ class Document(models.Model):
         (8, 'Эссе'),
         (9, 'Доклад'),
         (10, 'Лекция'),
-        (11, 'Методичка'),
+        (11, 'Методические пособия'),
         (12, 'Сочинение'),
         (13, 'Контрольная работа'),
     ]
-    
+
     title = models.CharField(max_length=255, unique=True, verbose_name="Заголовок")
     abstract_ru = models.TextField(verbose_name="Аннотация на русском")
     abstract_en = models.TextField(null=True, blank=True, verbose_name="Аннотация на английском")
@@ -87,7 +87,7 @@ class Document(models.Model):
 
     def __str__(self) -> str:
         return f'{self.title} - {self.document_type}'
-    
+
     def __repr__(self) -> str:
         template = '<Document title="{0}" publisher="{1}" type="{2}">'
         return template.format(
@@ -103,8 +103,8 @@ class Document(models.Model):
 
 class Category(models.Model):
     """ Класс модели категории документа c типом категории.
-    
-    Реализовано так по причине, что от модели не требуется множественная вложенность 
+
+    Реализовано так по причине, что от модели не требуется множественная вложенность
     (многоуровневое наследование Категории на инстансы своего же класса).
     """
     CATEGORY_TYPE = [
@@ -128,7 +128,7 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name} - {self.category_type}'
-    
+
     def __repr__(self) -> str:
         template = '<Category name="{0}" category_type="{1}">'
         return template.format(
