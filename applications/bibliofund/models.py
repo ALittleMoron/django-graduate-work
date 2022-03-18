@@ -20,6 +20,9 @@ class FileStatistic(models.Model):
     def increment_field(self, field_name: str) -> None:
         setattr(self, field_name, models.F(field_name) + 1)
         self.save(update_fields=[field_name])
+    
+    def __str__(self) -> str:
+        return f"Статистика {self.pk}: {self.download_count} скачивание, {self.view_count} просмотр"
 
     class Meta:
         verbose_name = "Стасистика"
