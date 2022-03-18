@@ -1,4 +1,4 @@
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.utils import timezone
 from slugify import slugify
@@ -38,3 +38,10 @@ def create_favorites(sender, instance, created, **kwargs):
         statistic.save()
         instance.statistic = statistic
         instance.save()
+
+
+@receiver(post_delete, sender=Document)
+def delete_statistic(sender, instance, **kwargs):
+    instance.statistic.delete()
+    instance.statistic.save()
+    instance.save()
